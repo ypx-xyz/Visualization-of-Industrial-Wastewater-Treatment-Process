@@ -1,0 +1,12 @@
+# ===== 历史迭代预览图归档（保留最新版即可，历史版本不入库）=====
+resources/preview-archive/
+
+# ===== 系统文件 =====
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ===== 构建/依赖（当前无构建步骤，预留）=====
+node_modules/
+dist/
+*.log

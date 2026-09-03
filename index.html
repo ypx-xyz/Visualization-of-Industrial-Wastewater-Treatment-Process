@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智维云-污水治理版 · 工艺流程 X6 编辑页</title>
+<link rel="stylesheet" href="css/style.css?v=20260827n">
+</head>
+<body>
+
+<!-- ===================== 顶栏 ===================== -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="logo-mark"></div>
+    <div class="logo-title">智维云 · 污水治理版</div>
+    <div class="logo-sub">工艺流程图 · X6 编辑模式</div>
+  </div>
+  <div class="topbar-mid">
+    <span class="nav-hint">原水管控 <i class="nav-arrow">▸</i> 工艺流程监控</span>
+  </div>
+  <div class="topbar-right">
+    <div class="stat"><label>今日进水</label><b>1,986.40 <i>m³</i></b></div>
+    <div class="stat"><label>今日出水</label><b>1,942.70 <i>m³</i></b></div>
+    <div class="stat"><label>运行状态</label><b class="ok-badge"><span class="dot"></span>正常</b></div>
+    <div class="stat"><label>出水达标率</label><b>100<i>%</i></b></div>
+  </div>
+</header>
+
+<!-- ===================== 主体三栏 ===================== -->
+<div class="main">
+
+  <!-- 左栏：原水管控 -->
+  <aside class="leftnav">
+    <div class="nav-caption">原水管控</div>
+    <div class="nav-switch" id="sourceSwitch">
+      <div class="switch-opt active" data-mode="station"><span class="switch-ico">◈</span>在线监测站房</div>
+      <div class="switch-opt" data-mode="device"><span class="switch-ico">◉</span>原水管控装置</div>
+    </div>
+    <div class="nav-data-title">原水水质数据</div>
+    <div class="nav-data" id="navData"><!-- JS 渲染 COD/氨氮/pH/流量 --></div>
+
+    <div class="nav-caption">工艺图元库</div>
+    <div class="stencil" id="stencil">
+      <div class="stencil-item" data-svg="调节池"><span class="sdot" style="--c:#7FF3FF"></span>调节池</div>
+      <div class="stencil-item" data-svg="反应池"><span class="sdot" style="--c:#00F0FF"></span>反应池</div>
+      <div class="stencil-item" data-svg="沉淀池"><span class="sdot" style="--c:#9FFFFF"></span>沉淀池</div>
+      <div class="stencil-item" data-svg="厌氧池"><span class="sdot" style="--c:#5FE3A8"></span>厌氧池</div>
+      <div class="stencil-item" data-svg="缺氧池"><span class="sdot" style="--c:#5FE3A8"></span>缺氧池</div>
+      <div class="stencil-item" data-svg="好氧池"><span class="sdot" style="--c:#6BC5FF"></span>好氧池</div>
+      <div class="stencil-item" data-svg="二沉池"><span class="sdot" style="--c:#7FF3FF"></span>生化沉淀池</div>
+      <div class="stencil-item" data-svg="水泵"><span class="sdot" style="--c:#FFB36B"></span>离心泵</div>
+      <div class="stencil-item" data-svg="风机"><span class="sdot" style="--c:#FFB36B"></span>风机</div>
+      <div class="stencil-item" data-svg="搅拌机"><span class="sdot" style="--c:#C9A8FF"></span>搅拌机</div>
+      <div class="stencil-item" data-svg="曝气盘"><span class="sdot" style="--c:#C9A8FF"></span>曝气盘</div>
+    </div>
+    <div class="stencil-tip">点击图元添加至画布，节点可拖动，选中后 Delete 删除</div>
+  </aside>
+
+  <!-- 中栏：X6 画布 -->
+  <section class="canvas-wrap">
+    <div class="canvas-toolbar" id="canvasToolbar">
+      <span class="tool-btn" data-act="add-pool">＋ 添加池体</span>
+      <span class="tool-btn" data-act="add-device">＋ 添加设备</span>
+      <span class="tool-btn" data-act="add-pipe">＋ 添加管道</span>
+      <span class="tool-btn danger" data-act="del">删除选中</span>
+      <span class="tool-btn" data-act="reset">重置布局</span>
+      <span class="tool-btn" data-act="export">导出JSON</span>
+      <span class="toolbar-spacer"></span>
+      <span class="canvas-hint">点击池体查看历史数据 · 拖动节点可编辑布局</span>
+    </div>
+    <div class="canvas-container" id="graphContainer"></div>
+  </section>
+
+  <!-- 右栏：总排口站房 -->
+  <aside class="rightpanel">
+    <div class="rp-title">总排口站房 · 出水监测</div>
+    <div class="outlet-list" id="outletList">
+      <!-- JS 渲染 -->
+    </div>
+    <div class="outlet-btns">
+      <button class="btn-stand" id="btnStand">达标判定</button>
+      <button class="btn-export" id="btnExport">生成运行记录</button>
+    </div>
+    <div class="rp-divider"></div>
+    <div class="rp-title">厂区信息</div>
+    <div class="plant-info">
+      <div>研发测试厂区</div>
+      <div>广东省 广州市</div>
+      <div class="plant-status"><span class="dot"></span>正常运行</div>
+    </div>
+  </aside>
+</div>
+
+<!-- ===================== 底部：风机房 + 药剂 ===================== -->
+<div class="bottombar">
+  <div class="fans-section">
+    <div class="bb-title">风机房</div>
+    <div class="fans-grid" id="fansGrid">
+      <!-- JS 渲染 -->
+    </div>
+  </div>
+  <div class="chem-section">
+    <div class="bb-title">液体药剂液位存量</div>
+    <div class="chem-grid" id="chemGrid">
+      <!-- JS 渲染 -->
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 池体详情抽屉 ===================== -->
+<div class="drawer-mask" id="drawerMask"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-title" id="drawerTitle">调节池</div>
+      <div class="drawer-sub" id="drawerSub">历史数据 · 过程设备 vs 化验室</div>
+    </div>
+    <button class="drawer-close" id="drawerClose">×</button>
+  </div>
+
+  <div class="drawer-body">
+    <div class="param-tabs" id="paramTabs">
+      <!-- JS 渲染 参数切换 -->
+    </div>
+    <div class="time-range" id="timeRange">
+      <span data-range="24h" class="active">近24小时</span>
+      <span data-range="7d">近7天</span>
+      <span data-range="30d">近30天</span>
+    </div>
+    <div class="chart-box">
+      <div class="chart-legend">
+        <span class="lg lg-proc"><i></i>过程监测设备</span>
+        <span class="lg lg-lab"><i></i>化验室数据</span>
+        <span class="lg-lg" id="chartUnit"></span>
+      </div>
+      <div class="chart" id="chart"></div>
+    </div>
+    <div class="data-table-wrap">
+      <div class="dt-title">最近化验室数据</div>
+      <table class="data-table" id="dataTable">
+        <thead><tr><th>时间</th><th>化验值</th><th>过程设备值</th><th>偏差</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</aside>
+
+<!-- 图元选择弹层（添加池体/设备） -->
+<div class="modal-mask" id="modalMask">
+  <div class="modal">
+    <div class="modal-title" id="modalTitle">添加池体</div>
+    <div class="modal-grid" id="modalGrid"></div>
+    <div class="modal-foot"><button class="modal-cancel" id="modalCancel">取消</button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@antv/x6@2/dist/x6.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script src="js/svg-assets.js?v=20260827n"></script>
+<script src="js/mock-data.js?v=20260827n"></script>
+<script src="js/app.js?v=20260827n"></script>
+</body>
+</html>
