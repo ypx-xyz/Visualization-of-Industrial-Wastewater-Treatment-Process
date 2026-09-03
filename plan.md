@@ -1,11 +1,11 @@
-# X6 工艺流程编辑页 · 开发计划
+# 工艺流程编辑页（X6）· 开发计划
 
-> 智维云-污水治理版 可视化层交互原型
+> 工业污水处理过程可视化 交互原型
 > 目标：将工艺流程大屏做成 AntV X6 可编辑 + 可点击查看详情的交互页面
 
 ## 背景与需求
 
-基于 2026-08-26 确认的大屏设计方案（见 `../images/generated.png` 及方案清单），制作可交互 X6 图编辑页。
+基于 2026-08-26 确认的工艺大屏设计方案，制作可交互 X6 图编辑页。
 
 **用户已确认的精确方案清单：**
 1. 左侧「原水管控」：在线监测站房 / 原水管控装置，可切换
@@ -28,7 +28,7 @@
 - 纯 HTML + CSS + 原生 JS（无需构建，双击可开，便于方案确认）
 - AntV X6 v2（图编辑引擎，CDN）
 - ECharts 5（历史曲线，CDN）
-- 复用 `03_可视化设计/SVG工艺图元/` 已有图元（已生成 `js/svg-assets.js`）
+- 复用自绘 SVG 工艺图元库（已生成 `js/svg-assets.js`）
 
 ## 目录结构
 
@@ -155,7 +155,7 @@ X6工艺流程编辑/
 3. **动画注入顺序坑**：必须先 `enhanceSvg`（匹配原始 `url(#gBody)`）再做 `svgWithPrefix` 前缀化，否则前缀化后 `url(#gBody)` 变成 `url(#prefix-gBody)` 导致匹配失败
 4. app.js 曾有一处括号缺失导致 SyntaxError，node --check 语法检查可快速发现
 5. SVG 图元内嵌需 id 前缀化（svgWithPrefix），避免多节点 gradient/filter id 冲突
-6. 浏览器插件（cdp）对高动画负载页面间歇性 504，验证用 Node 脚本替代（`99_工作中间产物/verify_enhance.js` 可验证 enhanceSvg 逻辑）
+6. 浏览器插件（cdp）对高动画负载页面间歇性 504，验证用 Node 脚本替代（`verify_enhance.js` 可验证 enhanceSvg 逻辑）
 
 ## 备注
 
